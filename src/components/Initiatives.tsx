@@ -13,6 +13,7 @@ import sdg12ProgressReportPdf from "@/data/SDG12 cover.pdf";
 import sdg13ProgressReportPdf from "@/data/SDG13 cover.pdf";
 import sdg14ProgressReportPdf from "@/data/SDG14 cover.pdf";
 import sdg15ProgressReportPdf from "@/data/SDG15 cover.pdf";
+import sdg16NarrativeWithCoverPdf from "@/data/SDG 16 Narrative with cover.pdf";
 import sdg17Pict from "@/data/sdg17 pict.webp";
 import sdg17Animation from "@/data/sdg17.gif";
 import pict1 from "@/data/pict1.jpg";
@@ -96,6 +97,8 @@ const sdgProgressReports = Array.from({ length: 17 }, (_, index) => ({
           ? sdg14ProgressReportPdf
         : index === 14
           ? sdg15ProgressReportPdf
+        : index === 15
+          ? sdg16NarrativeWithCoverPdf
         : null,
 }));
 
