@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import partnershipReportPdf from "@/data/Partnership_CY_2025_spreadsheet_-_Sheet1-BlrlcyAd.pdf";
 import sdg1ProgressReportPdf from "@/data/SDG 1. No Poverty Report.pdf";
 import sdg2ProgressReportPdf from "@/data/SDG2 cover (2).pdf";
+import sdg3ProgressReportPdf from "@/data/SDG3 cover.pdf";
 import sdg4ProgressReportPdf from "@/data/SDG 4 Quality Education Report.pdf";
 import sdg8ProgressReportPdf from "@/data/SDG 8 Decent Work.pdf";
 import sdg6ProgressReportPdf from "@/data/SDG6.pdf";
@@ -75,6 +76,8 @@ const sdgProgressReports = Array.from({ length: 17 }, (_, index) => ({
     ? sdg1ProgressReportPdf
     : index === 1
       ? sdg2ProgressReportPdf
+    : index === 2
+      ? sdg3ProgressReportPdf
     : index === 3
       ? sdg4ProgressReportPdf
       : index === 5
