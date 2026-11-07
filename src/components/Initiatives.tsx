@@ -1,5 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import partnershipReportPdf from "@/data/Partnership_CY_2025_spreadsheet_-_Sheet1-BlrlcyAd.pdf";
+import sdg1ProgressReportPdf from "@/data/SDG 1. No Poverty Report.pdf";
+import sdg2ProgressReportPdf from "@/data/SDG2 cover (2).pdf";
+import sdg4ProgressReportPdf from "@/data/SDG 4 Quality Education Report.pdf";
+import sdg8ProgressReportPdf from "@/data/SDG 8 Decent Work.pdf";
+import sdg6ProgressReportPdf from "@/data/SDG6.pdf";
+import sdg7ProgressReportPdf from "@/data/SDG7.pdf";
+import sdg9ProgressReportPdf from "@/data/SDG9 cover.pdf";
+import sdg10ProgressReportPdf from "@/data/SDG10 cover.pdf";
+import sdg11ProgressReportPdf from "@/data/SDG11 cover.pdf";
+import sdg12ProgressReportPdf from "@/data/SDG12 cover.pdf";
+import sdg13ProgressReportPdf from "@/data/SDG13 cover.pdf";
+import sdg14ProgressReportPdf from "@/data/SDG14 cover.pdf";
+import sdg15ProgressReportPdf from "@/data/SDG15 cover.pdf";
+import sdg17Pict from "@/data/sdg17 pict.webp";
+import sdg17Animation from "@/data/sdg17.gif";
 import pict1 from "@/data/pict1.jpg";
 import pict2 from "@/data/pict2.jpg";
 import pict3 from "@/data/pict3.jpg";
@@ -31,13 +46,57 @@ import pict29 from "@/data/pict29.jpg";
 import pict30 from "@/data/pict30.jpg";
 import pict31 from "@/data/pict31.jpg";
 import { initiativeGroups, groupAccent, type Initiative } from "@/data/sdg17";
-import { ChevronDown, Network, FileBarChart, GraduationCap, FileText, ExternalLink, Newspaper } from "lucide-react";
+import { ChevronDown, FileText, ExternalLink, Newspaper } from "lucide-react";
 
-const groupIcons = [Network, FileBarChart, GraduationCap];
 const partnershipReportUrl = partnershipReportPdf;
+const sdgNavigationItems = [
+  { name: "No Poverty", color: "#e5243b" },
+  { name: "Zero Hunger", color: "#dda63a" },
+  { name: "Good Health and Well-Being", color: "#4c9f38" },
+  { name: "Quality Education", color: "#c5192d" },
+  { name: "Gender Equality", color: "#ff3a21" },
+  { name: "Clean Water and Sanitation", color: "#26bde2" },
+  { name: "Affordable and Clean Energy", color: "#fcc30b" },
+  { name: "Decent Work and Economic Growth", color: "#a21942" },
+  { name: "Industry, Innovation and Infrastructure", color: "#fd6925" },
+  { name: "Reduced Inequalities", color: "#dd1367" },
+  { name: "Sustainable Cities and Communities", color: "#fd9d24" },
+  { name: "Responsible Consumption and Production", color: "#bf8b2e" },
+  { name: "Climate Action", color: "#3f7e44" },
+  { name: "Life Below Water", color: "#0a97d9" },
+  { name: "Life on Land", color: "#56c02b" },
+  { name: "Peace, Justice and Strong Institutions", color: "#00689d" },
+  { name: "Partnerships for the Goals", color: "#19486a" },
+];
 const sdgProgressReports = Array.from({ length: 17 }, (_, index) => ({
   label: `SDG ${index + 1} Progress report`,
-  href: null as string | null,
+  href: index === 0
+    ? sdg1ProgressReportPdf
+    : index === 1
+      ? sdg2ProgressReportPdf
+    : index === 3
+      ? sdg4ProgressReportPdf
+      : index === 5
+        ? sdg6ProgressReportPdf
+      : index === 6
+        ? sdg7ProgressReportPdf
+      : index === 7
+        ? sdg8ProgressReportPdf
+        : index === 8
+          ? sdg9ProgressReportPdf
+        : index === 9
+          ? sdg10ProgressReportPdf
+        : index === 10
+          ? sdg11ProgressReportPdf
+        : index === 11
+          ? sdg12ProgressReportPdf
+        : index === 12
+          ? sdg13ProgressReportPdf
+        : index === 13
+          ? sdg14ProgressReportPdf
+        : index === 14
+          ? sdg15ProgressReportPdf
+        : null,
 }));
 
 const relatedPosts = [
@@ -91,88 +150,96 @@ const relatedPosts = [
   },
 ];
 
+const evidenceArticles: Record<string, { title: string; href: string }[]> = {
+  "17.2.2": [relatedPosts[0]],
+  "17.2.3": [
+    {
+      title: "Global research convergence drives academic data exchange for climate and disaster resilience | 05 December 2025",
+      href: "https://www.facebook.com/share/p/1CGRLSu5TF/",
+    },
+    {
+      title: "ESSU students secure top awards in regional community-based monitoring data conventions",
+      href: "https://www.facebook.com/share/p/1K4dYhJQpK/",
+    },
+  ],
+  "17.2.4": [
+    {
+      title: "Cross-border hospitality internships yield global industry performance and skill development data",
+      href: "https://www.facebook.com/share/p/19dcMeA5hZ/",
+    },
+  ],
+  "17.2.5": [
+    {
+      title: "DSWD integrates multi-agency employment support services for university beneficiaries",
+      href: "https://www.facebook.com/share/p/1C4AhNWunk/",
+    },
+    {
+      title: "ESSU and local high school partner to deliver environmental governance and conservation education",
+      href: "https://www.facebook.com/share/p/1JHRwnXHEr/",
+    },
+  ],
+  "17.4.1": [
+    {
+      title: "Institutional strategic planning formalizes long-term development agenda for sustainable governance and innovation",
+      href: "https://www.facebook.com/share/p/1KCqEgGG19/",
+    },
+    {
+      title: "ESSU Main Library deploys virtual services and digital repositories to support flexible academic continuity",
+      href: "https://www.facebook.com/share/p/1CGUJYVYy5/",
+    },
+    {
+      title: "ESSU guidance center deploys virtual psychological support infrastructure for institutional well-being",
+      href: "https://www.facebook.com/share/p/1FESx9HEia/",
+    },
+    {
+      title: "ESSU concludes charter week by integrating campus-wide ecological protection and waste management drives",
+      href: "https://www.facebook.com/share/p/1PZL6oYccm/",
+    },
+  ],
+  "17.4.2": [
+    {
+      title: "ESSU joins multi-agency CSC for provincial climate resilience initiative",
+      href: "https://www.facebook.com/share/p/1GXoVPfT5P/",
+    },
+    {
+      title: "ESSU operationalizes DBM health allowance election through democratic civil service consultation",
+      href: "https://www.facebook.com/share/p/19bphppEbU/",
+    },
+  ],
+  "17.4.3": [
+    {
+      title: "State University and Department of Education launch joint research capacity building program for provincial teachers",
+      href: "https://www.facebook.com/share/p/1DNTedtbFs/",
+    },
+    {
+      title: "ESSU-DepEd partnership builds research capacity among educators through Project TUL-Id",
+      href: "https://www.facebook.com/story.php?story_fbid=1136909858457279&id=100064148258416&rdid=cR7lNrLUlKwmH9bn",
+    },
+    {
+      title: "ESSU launches free NMAT review program for aspiring physicians",
+      href: "https://www.facebook.com/share/p/1HYJFmfKug/",
+    },
+  ],
+};
+
+const alwaysVisibleEvidenceIds = new Set([
+  "17.2.1",
+  "17.2.2",
+  "17.2.3",
+  "17.2.4",
+  "17.2.5",
+  "17.4.1",
+  "17.4.2",
+  "17.4.3",
+]);
+
 function InitiativeCard({ item }: { item: Initiative }) {
   const [expanded, setExpanded] = useState(false);
   const itemKey = item.id.split(" ")[0];
   const isLong = item.body.length > 320;
   const display = expanded || !isLong ? item.body : `${item.body.slice(0, 320).trimEnd()}…`;
-  const visibleRelatedPosts = itemKey === "17.2.2"
-    ? [relatedPosts[0]]
-    : itemKey === "17.2.3"
-      ? [
-          {
-            title: "Global research convergence drives academic data exchange for climate and disaster resilience | 05 December 2025",
-            href: "https://www.facebook.com/share/p/1CGRLSu5TF/",
-          },
-          {
-            title: "ESSU students secure top awards in regional community-based monitoring data conventions",
-            href: "https://www.facebook.com/share/p/1K4dYhJQpK/",
-          },
-        ]
-      : itemKey === "17.2.4"
-        ? [
-            {
-              title: "Cross-border hospitality internships yield global industry performance and skill development data",
-              href: "https://www.facebook.com/share/p/19dcMeA5hZ/",
-            },
-          ]
-        : itemKey === "17.2.5"
-          ? [
-              {
-                title: "DSWD integrates multi-agency employment support services for university beneficiaries",
-                href: "https://www.facebook.com/share/p/1C4AhNWunk/",
-              },
-              {
-                title: "ESSU and local high school partner to deliver environmental governance and conservation education",
-                href: "https://www.facebook.com/share/p/1JHRwnXHEr/",
-              },
-            ]
-          : itemKey === "17.4.1"
-            ? [
-                {
-                  title: "Institutional strategic planning formalizes long-term development agenda for sustainable governance and innovation",
-                  href: "https://www.facebook.com/share/p/1KCqEgGG19/",
-                },
-                {
-                  title: "ESSU Main Library deploys virtual services and digital repositories to support flexible academic continuity",
-                  href: "https://www.facebook.com/share/p/1CGUJYVYy5/",
-                },
-                {
-                  title: "ESSU guidance center deploys virtual psychological support infrastructure for institutional well-being",
-                  href: "https://www.facebook.com/share/p/1FESx9HEia/",
-                },
-                {
-                  title: "ESSU concludes charter week by integrating campus-wide ecological protection and waste management drives",
-                  href: "https://www.facebook.com/share/p/1PZL6oYccm/",
-                },
-              ]
-            : itemKey === "17.4.2"
-              ? [
-                  {
-                    title: "ESSU joins multi-agency CSC for provincial climate resilience initiative",
-                    href: "https://www.facebook.com/share/p/1GXoVPfT5P/",
-                  },
-                  {
-                    title: "ESSU operationalizes DBM health allowance election through democratic civil service consultation",
-                    href: "https://www.facebook.com/share/p/19bphppEbU/",
-                  },
-                ]
-              : itemKey === "17.4.3"
-                ? [
-                    {
-                      title: "State University and Department of Education launch joint research capacity building program for provincial teachers",
-                      href: "https://www.facebook.com/share/p/1DNTedtbFs/",
-                    },
-                    {
-                      title: "ESSU-DepEd partnership builds research capacity among educators through Project TUL-Id",
-                      href: "https://www.facebook.com/story.php?story_fbid=1136909858457279&id=100064148258416&rdid=cR7lNrLUlKwmH9bn",
-                    },
-                    {
-                      title: "ESSU launches free NMAT review program for aspiring physicians",
-                      href: "https://www.facebook.com/share/p/1HYJFmfKug/",
-                    },
-                  ]
-                : itemKey === "17.4.4"
+  const visibleRelatedPosts = evidenceArticles[itemKey]
+    ?? (itemKey === "17.4.4"
                   ? [
                       {
                         title: "State university extension project delivers community literacy programs to local elementary pupils",
@@ -183,7 +250,7 @@ function InitiativeCard({ item }: { item: Initiative }) {
                         href: "https://www.facebook.com/share/p/1HjqxDyhMw/",
                       },
                     ]
-                  : relatedPosts;
+                  : relatedPosts);
 
   return (
     <article className="group rounded-2xl bg-white ring-1 ring-emerald-900/8 hover:ring-emerald-300/40 transition-all duration-300 overflow-hidden flex flex-col">
@@ -234,21 +301,37 @@ function InitiativeCard({ item }: { item: Initiative }) {
                         <p className="mt-2 text-xs font-medium text-emerald-700/70">PDF report unavailable</p>
                       )
                     ) : (
-                      <div className="mt-2 space-y-2">
-                        {sdgProgressReports.map((report) => (
+                      <div className="mt-2 grid grid-cols-3 gap-3">
+                        {sdgProgressReports.map((report, index) => (
                           report.href ? (
                             <a
                               key={report.label}
+                              id={`sdg-report-${index + 1}`}
                               href={report.href}
                               target="_blank"
                               rel="noreferrer"
-                              className="inline-flex w-full items-center gap-1.5 text-left text-xs font-bold text-emerald-700 hover:text-emerald-950 transition-colors"
+                              aria-label={`Open ${report.label} PDF`}
+                              className="block scroll-mt-24 overflow-hidden rounded-xl bg-white ring-1 ring-emerald-200 transition hover:ring-emerald-400 hover:shadow-md"
                             >
-                              {report.label}
-                              <ExternalLink className="h-3.5 w-3.5" />
+                              <div className="relative mx-auto aspect-[8.5/11] w-full max-w-[12rem] overflow-hidden bg-slate-100">
+                                <iframe
+                                  src={`${report.href}#page=1&view=Fit&toolbar=0&navpanes=0`}
+                                  title={`${report.label} first-page preview`}
+                                  className="pointer-events-none h-full w-full border-0"
+                                />
+                                <div className="absolute inset-0" />
+                              </div>
+                              <div className="flex items-center justify-between gap-3 p-3">
+                                <span className="text-xs font-bold text-emerald-800">{report.label}</span>
+                                <ExternalLink className="h-4 w-4 shrink-0 text-emerald-700" />
+                              </div>
                             </a>
                           ) : (
-                            <p key={report.label} className="text-xs font-medium text-emerald-700/70">
+                            <p
+                              key={report.label}
+                              id={`sdg-report-${index + 1}`}
+                              className="scroll-mt-24 rounded-xl bg-white/70 p-3 text-xs font-medium text-emerald-700/70 ring-1 ring-emerald-100"
+                            >
                               {report.label} — PDF to be uploaded later
                             </p>
                           )
@@ -572,9 +655,24 @@ export default function Initiatives() {
   const visibleGroups = initiativeGroups.filter((group) =>
     ["17.2", "17.3", "17.4"].some((prefix) => group.name.startsWith(prefix))
   );
+  const reportsGroup = initiativeGroups.find((group) => group.name.startsWith("17.3"));
   const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>({
     "17.2 Relationship to Support the Goals": true,
   });
+  const [pendingSdgNavigation, setPendingSdgNavigation] = useState<number | null>(null);
+  const [sdgNavigatorOpen, setSdgNavigatorOpen] = useState(false);
+
+  useEffect(() => {
+    if (pendingSdgNavigation === null || !reportsGroup || !expandedGroups[reportsGroup.name]) {
+      return;
+    }
+
+    document.getElementById(`sdg-report-${pendingSdgNavigation}`)?.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+    });
+    setPendingSdgNavigation(null);
+  }, [expandedGroups, pendingSdgNavigation, reportsGroup]);
 
   const toggleGroup = (groupName: string) => {
     setExpandedGroups((prev) => ({
@@ -583,8 +681,71 @@ export default function Initiatives() {
     }));
   };
 
+  const navigateToSdgReport = (goalNumber: number) => {
+    if (reportsGroup) {
+      setExpandedGroups((prev) => ({ ...prev, [reportsGroup.name]: true }));
+      setPendingSdgNavigation(goalNumber);
+    }
+    setSdgNavigatorOpen(false);
+  };
+
   return (
     <section id="initiatives" className="py-24 sm:py-32 px-5 sm:px-8 bg-white relative">
+      <aside
+        aria-label="Sustainable Development Goals navigation"
+        onMouseEnter={() => setSdgNavigatorOpen(true)}
+        onMouseLeave={() => setSdgNavigatorOpen(false)}
+        className={`fixed right-3 top-1/2 z-50 h-[min(34rem,80vh)] -translate-y-1/2 transition-[width] duration-300 ${
+          sdgNavigatorOpen ? "w-[min(19rem,calc(100vw-1.5rem))]" : "w-11"
+        }`}
+      >
+        {sdgNavigatorOpen && (
+          <nav
+            aria-label="Navigate to an SDG progress report"
+            className="absolute inset-y-0 left-0 right-10 overflow-y-auto rounded-l-2xl bg-white/95 p-3 shadow-lift ring-1 ring-emerald-900/10 backdrop-blur"
+          >
+            <div className="grid grid-cols-2 gap-2">
+              {sdgNavigationItems.map((goal, index) => (
+                <button
+                  key={goal.name}
+                  type="button"
+                  onClick={() => navigateToSdgReport(index + 1)}
+                  className="flex min-h-11 items-center gap-2 rounded-lg p-1.5 text-left text-[11px] font-semibold leading-tight text-emerald-950 transition hover:bg-emerald-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700"
+                  aria-label={`Go to SDG ${index + 1}: ${goal.name}`}
+                >
+                  <span
+                    className="grid h-8 w-8 shrink-0 place-items-center rounded text-sm font-extrabold text-white"
+                    style={{ backgroundColor: goal.color }}
+                    aria-hidden="true"
+                  >
+                    {index + 1}
+                  </span>
+                  <span>{goal.name}</span>
+                </button>
+              ))}
+            </div>
+          </nav>
+        )}
+        <button
+          type="button"
+          onClick={() => setSdgNavigatorOpen((open) => !open)}
+          aria-expanded={sdgNavigatorOpen}
+          aria-label={sdgNavigatorOpen ? "Close SDG navigation" : "Open SDG navigation"}
+          className="absolute right-0 top-1/2 flex h-28 w-10 -translate-y-1/2 flex-col items-center justify-center gap-2 rounded-l-xl bg-emerald-800 px-2 text-white shadow-lift transition hover:bg-emerald-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700"
+        >
+          <span className="text-xs font-extrabold">SDGs</span>
+          <span aria-hidden="true" className="text-lg leading-none">{sdgNavigatorOpen ? "›" : "‹"}</span>
+        </button>
+      </aside>
+
+      <div className="relative left-1/2 -mt-24 mb-12 flex h-24 w-screen -translate-x-1/2 justify-center overflow-hidden bg-[#1d3c6b] sm:-mt-32 sm:mb-16 sm:h-28">
+        <img
+          src={sdg17Animation}
+          alt="Sustainable Development Goal 17: Partnerships for the Goals"
+          className="h-full w-auto max-w-full object-contain"
+        />
+      </div>
+
       <div className="max-w-7xl mx-auto">
         <div className="max-w-2xl">
           <span className="inline-block px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 text-xs font-bold uppercase tracking-wider">
@@ -601,19 +762,24 @@ export default function Initiatives() {
 
         <div className="mt-16 space-y-20">
           {visibleGroups.map((group, gi) => {
-            const Icon = groupIcons[gi] ?? Network;
             const accent = groupAccent[gi] ?? groupAccent[0];
             const isExpanded = !!expandedGroups[group.name];
+            const groupContentId = `initiative-group-${gi}`;
+            const alwaysVisibleRelationshipItems = group.subcategories
+              .flatMap((sub) => sub.initiatives)
+              .filter((item) => alwaysVisibleEvidenceIds.has(item.id));
 
             return (
               <div key={group.name}>
                 <button
                   type="button"
                   onClick={() => toggleGroup(group.name)}
+                  aria-expanded={isExpanded}
+                  aria-controls={groupContentId}
                   className="w-full flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 pb-8 border-b border-emerald-900/10 text-left"
                 >
-                  <div className={`w-14 h-14 rounded-2xl grid place-items-center ring-1 ${accent.ring} ${accent.badge}`}>
-                    <Icon className="w-7 h-7" strokeWidth={2} />
+                  <div className="w-14 h-14 grid place-items-center">
+                    <img src={sdg17Pict} alt="" className="w-10 h-10 object-contain" />
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center justify-between gap-4">
@@ -625,23 +791,78 @@ export default function Initiatives() {
                   </div>
                 </button>
 
-                {isExpanded && (
-                  <div className="mt-10 space-y-12">
-                    {group.subcategories.map((sub) => (
-                      <div key={sub.name}>
-                        <div className="flex items-center gap-3 mb-5">
-                          <div className={`h-px w-8 bg-gradient-to-r ${accent.bar}`} />
-                          <h4 className="text-sm sm:text-base font-bold text-emerald-800">{sub.name}</h4>
+                <div id={groupContentId}>
+                  {!isExpanded && alwaysVisibleRelationshipItems.length > 0 && (
+                    <div className="mt-8 grid gap-4 sm:grid-cols-2">
+                      {alwaysVisibleRelationshipItems.map((item) => {
+                        const subcategory = group.subcategories.find((sub) =>
+                          sub.initiatives.some((initiative) => initiative.id === item.id)
+                        );
+
+                        return (
+                        <article key={item.id} className="rounded-2xl bg-emerald-50/70 p-5 ring-1 ring-emerald-200/80">
+                          <span className="font-serif-display text-sm font-bold text-amber-700 tabular-nums tracking-wide">
+                            {item.id}
+                          </span>
+                          <h4 className="mt-2 font-serif-display text-lg font-semibold leading-snug text-emerald-950">
+                            {subcategory?.name}
+                          </h4>
+                          <div className="mt-4 border-t border-emerald-200/80 pt-3">
+                            <p className="text-[11px] font-bold uppercase tracking-widest text-emerald-700/70">
+                              Evidence
+                            </p>
+                            {item.id === "17.2.1" ? (
+                              <a
+                                href={partnershipReportUrl}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-emerald-800 hover:text-emerald-950"
+                              >
+                                Institutional linkages and partnerships development report
+                                <ExternalLink className="h-3.5 w-3.5 shrink-0" />
+                              </a>
+                            ) : (
+                              <ul className="mt-2 space-y-2">
+                                {evidenceArticles[item.id].map((evidence) => (
+                                  <li key={evidence.href}>
+                                    <a
+                                      href={evidence.href}
+                                      target="_blank"
+                                      rel="noreferrer"
+                                      className="inline-flex items-start gap-1.5 text-sm font-semibold text-emerald-800 hover:text-emerald-950"
+                                    >
+                                      <span>{evidence.title}</span>
+                                      <ExternalLink className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+                                    </a>
+                                  </li>
+                                ))}
+                              </ul>
+                            )}
+                          </div>
+                        </article>
+                        );
+                      })}
+                    </div>
+                  )}
+
+                  {isExpanded && (
+                    <div className="mt-10 space-y-12">
+                      {group.subcategories.map((sub) => (
+                        <div key={sub.name}>
+                          <div className="flex items-center gap-3 mb-5">
+                            <div className={`h-px w-8 bg-gradient-to-r ${accent.bar}`} />
+                            <h4 className="text-sm sm:text-base font-bold text-emerald-800">{sub.name}</h4>
+                          </div>
+                          <div className={`grid gap-5 ${sub.initiatives.length === 1 ? "grid-cols-1" : "md:grid-cols-2"}`}>
+                            {sub.initiatives.map((item) => (
+                              <InitiativeCard key={item.id} item={item} />
+                            ))}
+                          </div>
                         </div>
-                        <div className={`grid gap-5 ${sub.initiatives.length === 1 ? "grid-cols-1" : "md:grid-cols-2"}`}>
-                          {sub.initiatives.map((item) => (
-                            <InitiativeCard key={item.id} item={item} />
-                          ))}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
             );
           })}
