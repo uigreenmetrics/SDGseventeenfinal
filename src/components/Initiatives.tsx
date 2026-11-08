@@ -4,6 +4,7 @@ import sdg1ProgressReportPdf from "@/data/SDG 1. No Poverty Report.pdf";
 import sdg2ProgressReportPdf from "@/data/SDG2 cover (2).pdf";
 import sdg3ProgressReportPdf from "@/data/SDG3 cover.pdf";
 import sdg4ProgressReportPdf from "@/data/SDG 4 Quality Education Report.pdf";
+import sdg5ConsolidatedNarrativePdf from "@/data/SDG 5 Consolidated Narrative with cover.pdf";
 import sdg8ProgressReportPdf from "@/data/SDG 8 Decent Work.pdf";
 import sdg6ProgressReportPdf from "@/data/SDG6.pdf";
 import sdg7ProgressReportPdf from "@/data/SDG7.pdf";
@@ -15,6 +16,7 @@ import sdg13ProgressReportPdf from "@/data/SDG13 cover.pdf";
 import sdg14ProgressReportPdf from "@/data/SDG14 cover.pdf";
 import sdg15ProgressReportPdf from "@/data/SDG15 cover.pdf";
 import sdg16NarrativeWithCoverPdf from "@/data/SDG 16 Narrative with cover.pdf";
+import sdg17ProgressReportPdf from "@/data/SDG17.pdf";
 import sdg17Pict from "@/data/sdg17 pict.webp";
 import sdg17Animation from "@/data/sdg17.gif";
 import pict1 from "@/data/pict1.jpg";
@@ -80,6 +82,8 @@ const sdgProgressReports = Array.from({ length: 17 }, (_, index) => ({
       ? sdg3ProgressReportPdf
     : index === 3
       ? sdg4ProgressReportPdf
+      : index === 4
+        ? sdg5ConsolidatedNarrativePdf
       : index === 5
         ? sdg6ProgressReportPdf
       : index === 6
@@ -102,6 +106,8 @@ const sdgProgressReports = Array.from({ length: 17 }, (_, index) => ({
           ? sdg15ProgressReportPdf
         : index === 15
           ? sdg16NarrativeWithCoverPdf
+        : index === 16
+          ? sdg17ProgressReportPdf
         : null,
 }));
 
